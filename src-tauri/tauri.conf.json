@@ -1,0 +1,52 @@
+{
+  "productName": "tauri-app",
+  "version": "0.0.0",
+  "identifier": "com.tauri.devthom",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "tauri-app",
+        "width": 800,
+        "height": 600
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "category": "Utility",
+    "linux": {
+      "rpm": {
+        "epoch": 0,
+        "files": {},
+        "release": "1",
+        "preInstallScript": "/home/thomas/Documents/github/tauri-app/src-tauri/prescript.sh",
+        "postInstallScript": "/home/thomas/Documents/github/tauri-app/src-tauri/postscript.sh",
+        "preRemoveScript": "/home/thomas/Documents/github/tauri-app/src-tauri/prescript.sh",
+        "postRemoveScript": "/home/thomas/Documents/github/tauri-app/src-tauri/postscript.sh",
+        "conflicts": ["oldLib.rpm"],
+        "depends": ["newLib.rpm"],
+        "obsoletes": ["veryoldLib.rpm"],
+        "provides": ["coolLib.rpm"].
+        "desktopTemplate": "/home/thomas/Documents/github/tauri-app/src-tauri/desktop-template.ejs",
+      }
+    }
+  }
+}

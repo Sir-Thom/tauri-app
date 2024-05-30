@@ -1,0 +1,30 @@
+{
+  "id" : "com.tauri.devthom",
+  "runtime" : "org.gnome.Platform",
+  "runtime-version" : "45",
+  "runtime-commit" : "4ba3ea0f6bc223854ce639b442a3d0e1c79da44585b8a70ff187f19ff908d4c4",
+  "sdk" : "org.gnome.Sdk",
+  "sdk-commit" : "9b19234404de85a19803b0ce2871c458a11fc5b8a0d99362e62740255befb7da",
+  "command" : "tauri-app",
+  "modules" : [
+    {
+      "name" : "binary",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "path" : "../tauri-app/src-tauri/target/release/bundle/deb/tauri-app_0.0.0_amd64/data/usr/bin/tauri-app",
+          "type" : "file"
+        }
+      ],
+      "build-commands" : [
+        "install -Dm755 tauri-app /app/bin/tauri-app"
+      ]
+    }
+  ],
+  "finish-args" : [
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--device=dri"
+  ],
+  "source-date-epoch" : 1716401480
+}

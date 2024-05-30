@@ -1,0 +1,17 @@
+[Application]
+name=com.tauri.devthom
+runtime=org.gnome.Platform/x86_64/45
+sdk=org.gnome.Sdk/x86_64/45
+command=tauri-app
+
+[Context]
+sockets=x11;wayland;fallback-x11;
+devices=dri;
+
+[Extension com.tauri.devthom.Debug]
+directory=lib/debug
+autodelete=true
+no-autodownload=true
+
+[Build]
+built-extensions=com.tauri.devthom.Debug;
