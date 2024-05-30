@@ -10,24 +10,18 @@ jobs:
   release:
     permissions:
       contents: write
-    strategy:
-      fail-fast: false
-      matrix:
-        platform: [ubuntu-22.04]
-    runs-on: ${{ matrix.platform }}
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.1 libappindicator3-dev librsvg2-dev patchelf rpm
 
       - name: Check glib-2.0 installation
-        if: matrix.platform == 'ubuntu-22.04'
         env:
           PKG_CONFIG_PATH: "/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig"
         run: dpkg -l libglib2.0-dev
@@ -38,8 +32,8 @@ jobs:
       - name: Cache cargo dependencies
         uses: Swatinem/rust-cache@v2
         with:
-          shared-key: "${{ matrix.os }}"
-        
+          shared-key: "ubuntu"
+
       - name: Sync node version and setup cache
         uses: actions/setup-node@v4
         with:
@@ -47,7 +41,7 @@ jobs:
           cache: 'npm'
 
       - name: Install frontend dependencies
-        run: yarn install
+        run: npm install
 
       - name: Build the app
         uses: tauri-apps/tauri-action@dev
@@ -60,12 +54,7 @@ jobs:
           releaseDraft: true
           prerelease: false
 
-      - name: Build RPM package (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04'
-        run: cargo rpm build
-
       - name: Sign RPM package (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04'
         run: |
           echo "$GPG_KEY" | gpg --batch --import
           echo "%_gpg_name Dev@human.net" > ~/.rpmmacros
@@ -73,14 +62,13 @@ jobs:
           echo "%_gpg_path /home/runner/.gnupg" >> ~/.rpmmacros
           echo "%_gpgbin /usr/bin/gpg" >> ~/.rpmmacros
           echo "%_gpg_sign_cmd %{__gpg} gpg --batch --no-verbose --no-armor --passphrase $GPG_PASSPHRASE -u %_gpg_name -sbo %{__signature_filename} %{__plaintext_filename}" >> ~/.rpmmacros
-          rpm --addsign target/release/bundle/rpm/tauri-app-0.0.0-1.x86_64.rpm
+          rpm --addsign target/release/bundle/rpm/*.rpm
         env:
           GPG_KEY: ${{ secrets.GPG_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Upload RPM package (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04'
         uses: actions/upload-artifact@v2
         with:
           name: rpm-package
-          path: target/release/bundle/rpm/tauri-app-0.0.0-1.x86_64.rpm
+          path: target/release/bundle/rpm/*.rpm
