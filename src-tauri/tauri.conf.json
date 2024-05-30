@@ -36,16 +36,7 @@
       "rpm": {
         "epoch": 0,
         "files": {},
-        "release": "1",
-        "preInstallScript": "/home/thomas/Documents/github/tauri-app/src-tauri/prescript.sh",
-        "postInstallScript": "/home/thomas/Documents/github/tauri-app/src-tauri/postscript.sh",
-        "preRemoveScript": "/home/thomas/Documents/github/tauri-app/src-tauri/prescript.sh",
-        "postRemoveScript": "/home/thomas/Documents/github/tauri-app/src-tauri/postscript.sh",
-        "conflicts": ["oldLib.rpm"],
-        "depends": ["newLib.rpm"],
-        "obsoletes": ["veryoldLib.rpm"],
-        "provides": ["coolLib.rpm"],
-        "desktopTemplate": "/home/thomas/Documents/github/tauri-app/src-tauri/desktop-template.desktop"
+        "release": "1"
       }
     }
   }
