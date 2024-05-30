@@ -44,8 +44,8 @@
         "conflicts": ["oldLib.rpm"],
         "depends": ["newLib.rpm"],
         "obsoletes": ["veryoldLib.rpm"],
-        "provides": ["coolLib.rpm"].
-        "desktopTemplate": "/home/thomas/Documents/github/tauri-app/src-tauri/desktop-template.ejs",
+        "provides": ["coolLib.rpm"],
+        "desktopTemplate": "/home/thomas/Documents/github/tauri-app/src-tauri/desktop-template.desktop"
       }
     }
   }
