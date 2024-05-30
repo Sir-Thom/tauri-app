@@ -1,5 +1,0 @@
-[Runtime]
-name=com.tauri.devthom.Debug
-
-[ExtensionOf]
-ref=app/com.tauri.devthom/x86_64/master
