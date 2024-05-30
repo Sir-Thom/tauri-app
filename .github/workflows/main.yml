@@ -53,22 +53,3 @@ jobs:
           releaseBody: 'See the assets to download and install this version.'
           releaseDraft: true
           prerelease: false
-
-      - name: Sign RPM package (ubuntu only)
-        run: |
-          echo "$GPG_KEY" | gpg --batch --import
-          echo "%_gpg_name Dev@human.net" > ~/.rpmmacros
-          echo "%_signature gpg" >> ~/.rpmmacros
-          echo "%_gpg_path /home/runner/.gnupg" >> ~/.rpmmacros
-          echo "%_gpgbin /usr/bin/gpg" >> ~/.rpmmacros
-          echo "%_gpg_sign_cmd %{__gpg} gpg --batch --no-verbose --no-armor --passphrase $GPG_PASSPHRASE -u %_gpg_name -sbo %{__signature_filename} %{__plaintext_filename}" >> ~/.rpmmacros
-          rpm --addsign target/release/bundle/rpm/*.rpm
-        env:
-          GPG_KEY: ${{ secrets.GPG_KEY }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-
-      - name: Upload RPM package (ubuntu only)
-        uses: actions/upload-artifact@v2
-        with:
-          name: rpm-package
-          path: target/release/bundle/rpm/*.rpm
